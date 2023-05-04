@@ -16,6 +16,7 @@ struct ContentView: View {
     @GestureState private var dragState = DragState.inactive
 
     private let dragAreaThreshold: CGFloat = 65.0
+    let haptics = UINotificationFeedbackGenerator()
 
     @State var cardViews: [CardView] = {
         var views = [CardView]()
@@ -141,6 +142,8 @@ struct ContentView: View {
                                 }
 
                                 if drag.translation.width < -self.dragAreaThreshold || drag.translation.width > self.dragAreaThreshold {
+                                    playSound(sound: "sound-rise", type: "mp3")
+                                    self.haptics.notificationOccurred(.success)
                                     self.moveCards()
                                 }
                             })
