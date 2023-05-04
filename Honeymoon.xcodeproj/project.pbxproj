@@ -24,6 +24,8 @@
 		89C6F7242A028F6700F732B5 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6F7232A028F6700F732B5 /* InfoView.swift */; };
 		89C6F7262A028FEF00F732B5 /* TitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6F7252A028FEF00F732B5 /* TitleModifier.swift */; };
 		89C6F7292A0290F300F732B5 /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6F7282A0290F300F732B5 /* ButtonModifier.swift */; };
+		89C6F72B2A040AA200F732B5 /* SymbolModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6F72A2A040AA200F732B5 /* SymbolModifier.swift */; };
+		89C6F72E2A04408900F732B5 /* CardTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C6F72D2A04408900F732B5 /* CardTransition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		89C6F7232A028F6700F732B5 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		89C6F7252A028FEF00F732B5 /* TitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleModifier.swift; sourceTree = "<group>"; };
 		89C6F7282A0290F300F732B5 /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
+		89C6F72A2A040AA200F732B5 /* SymbolModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolModifier.swift; sourceTree = "<group>"; };
+		89C6F72D2A04408900F732B5 /* CardTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTransition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 		89C6F6F729FABED500F732B5 /* Honeymoon */ = {
 			isa = PBXGroup;
 			children = (
+				89C6F72C2A04407D00F732B5 /* Extension */,
 				89C6F6FC29FABED700F732B5 /* Assets.xcassets */,
 				89C6F71C29FBEA3000F732B5 /* Component */,
 				89C6F71429FAC22C00F732B5 /* Data */,
@@ -142,8 +147,17 @@
 			children = (
 				89C6F7252A028FEF00F732B5 /* TitleModifier.swift */,
 				89C6F7282A0290F300F732B5 /* ButtonModifier.swift */,
+				89C6F72A2A040AA200F732B5 /* SymbolModifier.swift */,
 			);
 			path = Modifier;
+			sourceTree = "<group>";
+		};
+		89C6F72C2A04407D00F732B5 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				89C6F72D2A04408900F732B5 /* CardTransition.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +236,8 @@
 				89C6F7242A028F6700F732B5 /* InfoView.swift in Sources */,
 				89C6F71B29FBE93C00F732B5 /* FooterView.swift in Sources */,
 				89C6F7262A028FEF00F732B5 /* TitleModifier.swift in Sources */,
+				89C6F72E2A04408900F732B5 /* CardTransition.swift in Sources */,
+				89C6F72B2A040AA200F732B5 /* SymbolModifier.swift in Sources */,
 				89C6F71929FAC43A00F732B5 /* HeaderView.swift in Sources */,
 				89C6F6FB29FABED500F732B5 /* ContentView.swift in Sources */,
 				89C6F7292A0290F300F732B5 /* ButtonModifier.swift in Sources */,

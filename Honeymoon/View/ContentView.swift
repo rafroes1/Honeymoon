@@ -11,9 +11,13 @@ struct ContentView: View {
     @State var showAlert: Bool = false
     @State var showGuide: Bool = false
     @State var showInfo: Bool = false
+    @State private var lastCardIndex: Int = 1
+    @State private var cardRemovalTransition = AnyTransition.trailingBottom
     @GestureState private var dragState = DragState.inactive
 
-    var cardViews: [CardView] = {
+    private let dragAreaThreshold: CGFloat = 65.0
+
+    @State var cardViews: [CardView] = {
         var views = [CardView]()
         for index in 0 ..< 2 {
             views.append(CardView(honeymoon: honeymoonData[index]))
@@ -63,6 +67,18 @@ struct ContentView: View {
         return index == 0
     }
 
+    private func moveCards() {
+        cardViews.removeFirst()
+
+        lastCardIndex += 1
+
+        let honeymoon = honeymoonData[lastCardIndex % honeymoonData.count]
+
+        let newCardView = CardView(honeymoon: honeymoon)
+        
+        cardViews.append(newCardView)
+    }
+
     var body: some View {
         VStack {
             // MARK: - HEADER
@@ -79,8 +95,19 @@ struct ContentView: View {
                 ForEach(cardViews) { cardView in
                     cardView
                         .zIndex(self.isTopCard(cardView: cardView) ? 1 : 0)
+                        .overlay(
+                            ZStack {
+                                Image(systemName: "x.circle")
+                                    .modifier(SymbolModifier())
+                                    .opacity(self.dragState.translation.width < -self.dragAreaThreshold && self.isTopCard(cardView: cardView) ? 1.0 : 0.0)
+
+                                Image(systemName: "heart.circle")
+                                    .modifier(SymbolModifier())
+                                    .opacity(self.dragState.translation.width > self.dragAreaThreshold && self.isTopCard(cardView: cardView) ? 1.0 : 0.0)
+                            }
+                        )
                         .offset(x: self.isTopCard(cardView: cardView) ? self.dragState.translation.width : 0, y: self.isTopCard(cardView: cardView) ? self.dragState.translation.height : 0)
-                        .rotationEffect(Angle(degrees: self.isTopCard(cardView: cardView) ? Double(self.dragState.translation.width/12) : 0))
+                        .rotationEffect(Angle(degrees: self.isTopCard(cardView: cardView) ? Double(self.dragState.translation.width / 12) : 0))
                         .animation(.interpolatingSpring(stiffness: 120, damping: 120))
                         .scaleEffect(self.dragState.isDragging && self.isTopCard(cardView: cardView) ? 0.85 : 1.0)
                         .gesture(LongPressGesture(minimumDuration: 0.01)
@@ -95,7 +122,30 @@ struct ContentView: View {
                                     break
                                 }
                             })
+                                .onChanged({ (value) in
+                                    guard case .second(true, let drag?) = value else {
+                                        return
+                                    }
+                                    
+                                    if drag.translation.width < -self.dragAreaThreshold {
+                                        self.cardRemovalTransition = .leadingBottom
+                                    }
+                                    
+                                    if drag.translation.width > self.dragAreaThreshold {
+                                        self.cardRemovalTransition = .trailingBottom
+                                    }
+                                })
+                            .onEnded({ value in
+                                guard case .second(true, let drag?) = value else {
+                                    return
+                                }
+
+                                if drag.translation.width < -self.dragAreaThreshold || drag.translation.width > self.dragAreaThreshold {
+                                    self.moveCards()
+                                }
+                            })
                         )
+                        .transition(self.cardRemovalTransition)
                 }
             }
             .padding(.horizontal)
